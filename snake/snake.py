@@ -1,7 +1,7 @@
 import turtle
 import time
 import random
-from obj import( create_food, create_head, create_text, mov, setup_keyboard_controls,)
+from obj import( create_food, move_food, create_head, create_text, create_hazard, mov, setup_keyboard_controls,)
 
 delay = 0.1
 body_segments=[]
@@ -14,6 +14,7 @@ off_screen = 1000
 
 food=create_food()
 head=create_head()
+hazard=create_hazard()
 text=create_text(score, high_score)
 # Configuración de la pantalla
 wn = turtle.Screen()
@@ -31,7 +32,7 @@ while True:
     wn.update()
     # Colisiones con la ventana
 
-    if head.xcor() > max_distance or head.xcor() < min_distance or head.ycor() >max_distance or head.ycor() < min_distance:
+    if head.xcor() > max_distance or head.xcor() < min_distance or head.ycor() >max_distance or head.ycor() < min_distance or head.distance(hazard.position()) < 20:
         time.sleep(1)
         head.goto(0, 0)
         head.direction= 'stop'
@@ -50,14 +51,15 @@ while True:
 
     # Colisiones de cabeza y comida
     if head.distance(food.position()) < 20:
-        x=random.randint(-270, 270 )
-        y=random.randint(-270, 270)
-        food.goto(x, y)
+        x2=random.randint(-270, 270 )
+        y2=random.randint(-270, 270)
+        move_food(food)
+        hazard.goto(x2, y2)
 
         # Config de segmentos
         new_segment= turtle.Turtle()
         new_segment.speed(0)
-        new_segment.shape('square')
+        new_segment.shape('circle')
         new_segment.color('gray')
         new_segment.penup()
         body_segments.append(new_segment)
@@ -66,10 +68,9 @@ while True:
         if score > high_score:
             high_score= score
         text.clear()
-        text = create_text(score, high_score)
+        text.write(f'Score {score}            High Score:{high_score}', align='center', font=('Arial', 24))
 
     # Colisiones con el cuerpo
-
     totalSeg = len(body_segments)
     
     for i in range(totalSeg - 1, 0, -1):
