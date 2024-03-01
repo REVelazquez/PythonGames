@@ -1,16 +1,20 @@
 import turtle
 import time
 import random
-from obj import( create_food, move_food, create_head, create_text, create_hazard, mov, setup_keyboard_controls,)
+from obj import create_food, move_food, create_head, create_text, create_hazard, mov, setup_keyboard_controls
 
 delay = 0.1
 body_segments=[]
+visible_hazards=[]
 score= 0
 high_score = 0
 max_distance = 280
 min_distance = -280
 variation = 10
 off_screen = 1000
+food_exist=0
+
+
 
 food=create_food()
 head=create_head()
@@ -32,14 +36,14 @@ while True:
     wn.update()
     # Colisiones con la ventana
 
-    if head.xcor() > max_distance or head.xcor() < min_distance or head.ycor() >max_distance or head.ycor() < min_distance or head.distance(hazard.position()) < 20:
+    if head.xcor() > max_distance or head.xcor() < min_distance or head.ycor() >max_distance or head.ycor() < min_distance or head.distance(hazard.position()) < 15:
         time.sleep(1)
         head.goto(0, 0)
         head.direction= 'stop'
         # Esconder segmentos:
-        x_food = random.randint(min_distance, max_distance)
-        y_food = random.randint(min_distance, max_distance)
-        food.goto(x_food, y_food)
+        x_food = min_distance, max_distance
+        y_food = min_distance, max_distance
+        
 
         for segment in body_segments:
             segment.goto (1000, 1000)
@@ -51,12 +55,12 @@ while True:
 
     # Colisiones de cabeza y comida
     if head.distance(food.position()) < 20:
-        x2=random.randint(-270, 270 )
-        y2=random.randint(-270, 270)
         move_food(food)
-        hazard.goto(x2, y2)
+        food_exist=0
+        if len(visible_hazards) < 10:
+            visible_hazards.append(hazard)
 
-        # Config de segmentos
+            # Config de segmentos
         new_segment= turtle.Turtle()
         new_segment.speed(0)
         new_segment.shape('circle')
@@ -64,7 +68,7 @@ while True:
         new_segment.penup()
         body_segments.append(new_segment)
 
-        score+=variation
+        score+=food.value
         if score > high_score:
             high_score= score
         text.clear()
