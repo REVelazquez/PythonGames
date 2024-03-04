@@ -5,18 +5,13 @@ from obj import create_food, move_food, create_head, create_text, create_hazard,
 
 delay = 0.1
 body_segments=[]
-visible_hazards=[]
 score= 0
 high_score = 0
 max_distance = 280
 min_distance = -280
 variation = 10
 off_screen = 1000
-food_exist=0
-
-
-
-food=create_food()
+food = create_food()
 head=create_head()
 hazard=create_hazard()
 text=create_text(score, high_score)
@@ -41,8 +36,8 @@ while True:
         head.goto(0, 0)
         head.direction= 'stop'
         # Esconder segmentos:
-        x_food = min_distance, max_distance
-        y_food = min_distance, max_distance
+        move_food(food)
+
         
 
         for segment in body_segments:
@@ -56,10 +51,17 @@ while True:
     # Colisiones de cabeza y comida
     if head.distance(food.position()) < 20:
         move_food(food)
-        food_exist=0
-        if len(visible_hazards) < 10:
-            visible_hazards.append(hazard)
+        step=5
+        x_food_position= food.xcor()
+        y_food_position= food.ycor()
+        x_hazard=0
+        y_hazard=0
+        while x_hazard==0:
+            x_hazard= random.randrange(x_food_position-30, x_food_position+30, step)
+        while y_hazard==0:
+            y_hazard= random.randrange(y_food_position-30, y_food_position+30, step)
 
+        hazard.goto(x_hazard, y_hazard)
             # Config de segmentos
         new_segment= turtle.Turtle()
         new_segment.speed(0)
@@ -68,7 +70,8 @@ while True:
         new_segment.penup()
         body_segments.append(new_segment)
 
-        score+=food.value
+        score += variation
+        
         if score > high_score:
             high_score= score
         text.clear()

@@ -1,5 +1,4 @@
 import turtle
-import random
 
 def create_hazard():
     hazard=turtle.Turtle()
@@ -7,9 +6,8 @@ def create_hazard():
     hazard.shape('triangle')
     hazard.color('red')
     hazard.penup()
-    x_hazard = random.randint(-280, 280)
-    y_hazard = random.randint(-280, 280)
     hazard.shapesize(stretch_wid=0.75, stretch_len=0.75)
-    hazard.goto(x_hazard, y_hazard)
+    hazard.goto(1000, 1000)
     hazard.direction = 'stop'
     return hazard
+
