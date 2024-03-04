@@ -4,3 +4,9 @@ a continuación se adjuntaran los diversos tutoriales utilizados para realizar d
 
 Snake:
 https://www.youtube.com/watch?v=lKzEvbGbbPo&ab_channel=YouDevs
+
+Deck:
+https://www.youtube.com/watch?v=l2n65N0C-ls&ab_channel=TokyoEdtech
+
+Blackjack in Console:
+https://www.youtube.com/watch?v=mpL0Y01v6tY&ab_channel=CodeCoach
