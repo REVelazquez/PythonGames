@@ -1,5 +1,5 @@
 Este repositorio contendra diversos juegos creados a partir de python para aprender a codificarlos con dicho idioma de programación,
-a continuación se adjuntaran los diversos tutoriales utilizados para realizar dichos juegos, al menos en una versión "inicial"
+a continuación se adjuntaran las diversas guias para ello.
 
 
 Snake:
