@@ -11,5 +11,5 @@ https://www.youtube.com/watch?v=l2n65N0C-ls&ab_channel=TokyoEdtech
 Blackjack en Consola:
 https://www.youtube.com/watch?v=mpL0Y01v6tY&ab_channel=CodeCoach
 
-Super pirate world:
-https://www.youtube.com/watch?v=WViyCAa6yLI&ab_channel=ClearCode
+Ninja game & assets:
+https://www.youtube.com/watch?v=2gABYM5M0ww&ab_channel=DaFluffyPotato
