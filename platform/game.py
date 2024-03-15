@@ -1,7 +1,8 @@
 import pygame, sys
 
 from scripts.entities import PhysicsEntity
-from scripts.utils import load_image
+from scripts.utils import load_image, load_images
+from scripts.tilemap import Tilemap
 
 class Game:
     def __init__(self):
@@ -11,25 +12,37 @@ class Game:
         pygame.display.set_caption('Ninja Game')
         self.screen = pygame.display.set_mode((640, 480))
 
+        self.display= pygame.Surface((320, 240))
+
         # Control de fps
         self.clock = pygame.time.Clock()
 
         self.movement= [False, False]
 
-        self.player = PhysicsEntity(self, 'player', (50, 50), (8, 15))
-
         self.assets = {
+            'decor' : load_images('tiles/decor'),
+            'grass' : load_images('tiles/grass'),
+            'large_decor' : load_images('tiles/large_decor'),
+            'stone' : load_images('tiles/stone'),
             'player' : load_image('entities/player.png')
         }
+        
+        self.player = PhysicsEntity(self, 'player', (50, 50), (8, 15))
+
+        self.tilemap = Tilemap(self, tile_size=16)
+
 
         
     def run(self):
         while True:
-            self.screen.fill((14, 219, 248))
+            self.display.fill((14, 219, 248))
 
-            self.player.update((self.movement[1] - self.movement[0], 0))
+            self.tilemap.render((self.display))
 
-            self.player.render(self.screen)
+            self.player.update(self.tilemap, (self.movement[1] - self.movement[0], 0))
+
+            self.player.render(self.display)
+
 
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -48,6 +61,9 @@ class Game:
                     if event.key == pygame.K_RIGHT:
                         self.movement[1] = False
 
+            # Esto permite que lo que tenemos en screen se muestre en el tamaño de "display" y a su vez se escale para que sea mas grande.
+            self.screen.blit(pygame.transform.scale(self.display, self.screen.get_size()),(0, 0))
+            
             pygame.display.update()
             self.clock.tick(60)
 
